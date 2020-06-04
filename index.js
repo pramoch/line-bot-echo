@@ -41,7 +41,7 @@ const replyText = (token, texts) => {
 };
 
 function handleText(message, replyToken, source) {
-  let text = message.text + 'test';
+  let text = message.text;
 
   if (message.text === 'profile') {
     if (source.userId) {
