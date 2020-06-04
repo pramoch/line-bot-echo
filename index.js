@@ -40,6 +40,46 @@ const replyText = (token, texts) => {
   );
 };
 
+const replyCarousel = (token) => {
+  return client.replyMessage(
+    token,
+    {
+      "type": "template",
+      "altText": "Shopping carousel",
+      "template": {
+        "type": "carousel",
+        "actions": [],
+        "columns": [
+          {
+            "thumbnailImageUrl": "https://www.apple.com/v/iphone-11-pro/c/images/overview/water-resistance/splashes__d3a02nzl9p4y_medium.jpg",
+            "title": "iPhone 11",
+            "text": "พอเหมาะพอดี ไปซะทุกอย่าง",
+            "actions": [
+              {
+                "type": "uri",
+                "label": "ดูเพิ่มเติม",
+                "uri": "https://www.apple.com/th/iphone/"
+              }
+            ]
+          },
+          {
+            "thumbnailImageUrl": "https://www.apple.com/v/mac/home/ap/images/overview/hero/macbook_pro_16__ni9nkbyq2dm6_large.jpg",
+            "title": "Macbook",
+            "text": "ตัวท็อปสำหรับมือโปร",
+            "actions": [
+              {
+                "type": "uri",
+                "label": "ดูเพิ่มเติม",
+                "uri": "https://www.apple.com/th/mac/"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  );
+};
+
 function handleText(message, replyToken, source) {
   let text = message.text;
 
@@ -49,12 +89,16 @@ function handleText(message, replyToken, source) {
         .then((profile) => replyText(
           replyToken,
           [
-            `Display name: ${profile.displayName}`
+            `Display name: ${profile.displayName}`,
+            `User ID: ${profile.userId}`
           ]
         ));
     } else {
       return replyText(replyToken, 'Bot can\'t use profile API without user ID');
     }
+  }
+  else if (message.text === 'shopping') {
+    return replyCarousel(replyToken);
   }
   
   replyText(replyToken, text);
