@@ -9,6 +9,9 @@ const config = {
   channelSecret: process.env.CHANNEL_SECRET,
 };
 
+// console.log('CHANNEL_ACCESS_TOKEN = ' + process.env.CHANNEL_ACCESS_TOKEN );
+// console.log('CHANNEL_SECRET = ' + process.env.CHANNEL_SECRET);
+
 // create LINE SDK client
 const client = new line.Client(config);
 
@@ -28,6 +31,35 @@ app.post('/callback', line.middleware(config), (req, res) => {
     });
 });
 
+// simple reply function
+const replyText = (token, texts) => {
+  texts = Array.isArray(texts) ? texts : [texts];
+  return client.replyMessage(
+    token,
+    texts.map((text) => ({ type: 'text', text }))
+  );
+};
+
+function handleText(message, replyToken, source) {
+  let text = message.text + 'test';
+
+  if (message.text === 'profile') {
+    if (source.userId) {
+      return client.getProfile(source.userId)
+        .then((profile) => replyText(
+          replyToken,
+          [
+            `Display name: ${profile.displayName}`
+          ]
+        ));
+    } else {
+      return replyText(replyToken, 'Bot can\'t use profile API without user ID');
+    }
+  }
+  
+  replyText(replyToken, text);
+}
+
 // event handler
 function handleEvent(event) {
   if (event.type !== 'message' || event.message.type !== 'text') {
@@ -35,11 +67,7 @@ function handleEvent(event) {
     return Promise.resolve(null);
   }
 
-  // create a echoing text message
-  const echo = { type: 'text', text: event.message.text };
-
-  // use reply API
-  return client.replyMessage(event.replyToken, echo);
+  handleText(event.message, event.replyToken, event.source);
 }
 
 // listen on port

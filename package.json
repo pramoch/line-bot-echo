@@ -4,10 +4,14 @@
   "description": "An example LINE bot just to echo messages",
   "main": "index.js",
   "scripts": {
-    "start": "node ."
+    "start": "node .",
+    "dev": "cross-env CHANNEL_ACCESS_TOKEN=xxx CHANNEL_SECRET=yyy nodemon ."
   },
   "dependencies": {
     "@line/bot-sdk": "^6.8.0",
     "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.2"
   }
 }
