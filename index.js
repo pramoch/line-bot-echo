@@ -106,6 +106,35 @@ const replyConfirm = (token) => {
   );
 }
 
+const replyButton = (token) => {
+  return client.replyMessage(
+    token,
+    {
+      "type": "template",
+      "altText": "Buttons Apple Watch",
+      "template": {
+        "type": "buttons",
+        "thumbnailImageUrl": "https://www.apple.com/v/apple-watch-hermes/r/images/hardware/s5-apple-watch-hermes/double-tour/double-tour-fauve-barenia-front__34sgrs9m5g26_small.jpg",
+        "imageAspectRatio": "square",
+        "title": "Apple Watch",
+        "text": "สมาร์ทวอทช์อันดับหนึ่งของโลก แบบคูณสอง",
+        "actions": [
+            {
+              "type": "message",
+              "label": "ซื้อ",
+              "text": "Buy Apple Watch"
+            },
+            {
+              "type": "uri",
+              "label": "ดูเพิ่มเติม",
+              "uri": "https://www.apple.com/th/watch/"
+            }
+        ]
+      }
+    }
+  );
+}
+
 function handleText(message, replyToken, source) {
   let text = message.text;
 
@@ -128,6 +157,9 @@ function handleText(message, replyToken, source) {
   }
   else if (message.text === 'confirm') {
     return replyConfirm(replyToken);
+  }
+  else if (message.text === 'button') {
+    return replyButton(replyToken);
   }
 
   replyText(replyToken, text);
