@@ -9,8 +9,8 @@ const config = {
   channelSecret: process.env.CHANNEL_SECRET,
 };
 
-// console.log('CHANNEL_ACCESS_TOKEN = ' + process.env.CHANNEL_ACCESS_TOKEN );
-// console.log('CHANNEL_SECRET = ' + process.env.CHANNEL_SECRET);
+//console.log('CHANNEL_ACCESS_TOKEN = ' + process.env.CHANNEL_ACCESS_TOKEN );
+//console.log('CHANNEL_SECRET = ' + process.env.CHANNEL_SECRET);
 
 // create LINE SDK client
 const client = new line.Client(config);
@@ -80,6 +80,32 @@ const replyCarousel = (token) => {
   );
 };
 
+const replyConfirm = (token) => {
+  return client.replyMessage(
+    token,
+    {
+      "type": "template",
+      "altText": "Confirm Lunch",
+      "template": {
+          "type": "confirm",
+          "text": "Will you join lunch?",
+          "actions": [
+              {
+                "type": "message",
+                "label": "Yes",
+                "text": "yes"
+              },
+              {
+                "type": "message",
+                "label": "No",
+                "text": "no"
+              }
+          ]
+      }
+    }
+  );
+}
+
 function handleText(message, replyToken, source) {
   let text = message.text;
 
@@ -100,7 +126,10 @@ function handleText(message, replyToken, source) {
   else if (message.text === 'shopping') {
     return replyCarousel(replyToken);
   }
-  
+  else if (message.text === 'confirm') {
+    return replyConfirm(replyToken);
+  }
+
   replyText(replyToken, text);
 }
 
