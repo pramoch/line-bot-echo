@@ -5,17 +5,18 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch via NPM",
+      "type": "node",
       "request": "launch",
+      "name": "Debug",
+      "runtimeExecutable": "npm",
       "runtimeArgs": [
         "run-script",
         "dev"
       ],
-      "runtimeExecutable": "npm",
+      "port": 9229,
       "skipFiles": [
         "<node_internals>/**"
-      ],
-      "type": "pwa-node"
+      ]
     }
   ]
 }
