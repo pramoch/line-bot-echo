@@ -29,3 +29,16 @@ $ node .
 ```
 https://your.base.url/callback
 ```
+
+## Run local
+
+``` shell
+npm run dev
+```
+
+- CHANNEL_ACCESS_TOKEN:
+  - Go to https://developers.line.biz
+  - Pramoch Provider > Rainbow shop > Messaging API > Channel access token > Dd..U=
+- CHANNEL_SECRET:
+  - Go to https://developers.line.biz
+  - Pramoch Provider > Rainbow shop > Basic settings > Channel secret > bb..e1
